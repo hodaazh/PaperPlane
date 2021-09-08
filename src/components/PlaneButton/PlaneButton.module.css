@@ -1,0 +1,236 @@
+@import "../../public/icomoon/style.css";
+
+:root {
+  --theme-color-1: #fff;
+  --primary: #f6f8ff;
+  --primary-dark: #d1d6ee;
+  --primary-darkest: #8a91b4;
+  --text: #362a89;
+  --text-opacity: 1;
+  --success: #eeecff;
+  --success-stroke: 14;
+  --success-opacity: 0;
+  --border-radius: 7;
+  --overflow: hidden;
+  --width: 5;
+  --height: 3.3;
+  --rotate: 0;
+  --plane-opacity: 1;
+}
+body {
+  background-color: blue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  position: relative;
+  padding: 0.5rem;
+  width: calc(var(--width) * 1rem);
+  height: calc((var(--height)) * 1rem);
+  border-radius: calc(var(--border-radius) * 1px);
+  border: none;
+  /* transform: scale(0.8); */
+  /* overflow: var(--overflow); */
+  transition: all 0.3s;
+  background-color: transparent !important;
+  animation: planeScale 3s alternate 2s forwards,
+    planeRotate 3s alternate 2.7s forwards;
+}
+.container.-size-small {
+  width: calc(var(--width) * 1rem);
+}
+.container.-size-medium {
+  --width: 6; /* --width:var(--width) + 1 =>  ??*/
+  width: calc((var(--width)) * 1rem);
+}
+.container.-size-large {
+  --width: 7;
+  width: calc((var(--width)) * 1rem);
+}
+.container.after {
+  flex-direction: row-reverse;
+}
+.space {
+  width: 0.7rem;
+}
+.iconClassName {
+  font-family: "icomoon";
+}
+.left,
+.right {
+  position: absolute;
+  transition: all 0.3s;
+  z-index: 100;
+}
+.left {
+  left: 0;
+  top: 0;
+  border-top: calc((var(--height)) * 1rem) solid red;
+  border-right: calc((var(--width) / 2) * 1rem) solid transparent;
+  transform: rotateZ(0);
+  animation: Left 1.5s alternate forwards;
+}
+.right {
+  right: 0;
+  top: 0;
+  border-top: calc((var(--height)) * 1rem) solid red;
+  border-left: calc((var(--width) / 2) * 1rem) solid transparent;
+  transform: rotateZ(0);
+  animation: Right 1.5s alternate forwards;
+}
+.middle {
+  position: absolute;
+  width: 2rem;
+  height: 3.3rem;
+  /* border-left: calc((var(--width) / 2) * 1rem) solid transparent;
+  border-right: calc((var(--width) / 2) * 1rem) solid transparent;
+  border-bottom: calc((var(--height)) * 1rem) solid white; */
+  background: conic-gradient(
+    at 50% 50%,
+    transparent 123deg,
+    white 124deg,
+    white 181deg,
+    white 182deg,
+    white 237deg,
+    transparent 238deg
+  );
+  animation: planeColor 1.5s alternate forwards;
+}
+/* .middle::after,
+.moddle::before {
+}
+.middle::before {
+  content: "";
+  position: absolute;
+  left: -1rem;
+  border-top: 0px solid transparent;
+ border-bottom: calc((var(--height)) * 1rem) solid rgb(245, 243, 243);
+
+  border-bottom: calc((var(--height)) * 1rem) solid white;
+  animation: colorRight 2s alternate 1s forwards;
+
+  border-left: 1rem solid transparent;
+  z-index: 100;
+}
+.middle::after {
+  content: "";
+  position: absolute;
+  right: -1rem;
+  border-top: 0px solid transparent;
+  border-bottom: calc((var(--height)) * 1rem) solid rgb(236, 234, 234);
+  border-bottom: calc((var(--height)) * 1rem) solid white;
+
+  border-right: 1rem solid transparent;
+  z-index: 100;
+  animation: colorLeft 2s alternate 1s forwards;
+} */
+.tail {
+  width: 2rem;
+  height: 1.3rem;
+  position: absolute;
+  left: 2.5rem;
+  background: conic-gradient(
+    at 50% 50%,
+    transparent 123deg,
+    white 124deg,
+    white 181deg,
+    white 182deg,
+    white 237deg,
+    transparent 238deg
+  );
+  transform: rotate(180deg);
+  z-index: 1000;
+  /* opacity: 0; */
+  animation: Tail 1s alternate 2s forwards, colorTail 1s alternate 2s forwards;
+}
+@keyframes planeScale {
+  100% {
+    transform: scale(0.8);
+  }
+}
+@keyframes planeRotate {
+  100% {
+    transform: scale(0.8) rotate(50deg);
+  }
+}
+@keyframes Left {
+  from {
+    transform: rotateZ(0deg);
+  }
+
+  to {
+    transform: rotateZ(180deg);
+  }
+}
+@keyframes Right {
+  from {
+    transform: rotateZ(0deg);
+  }
+
+  to {
+    transform: rotateZ(-180deg);
+  }
+}
+@keyframes colorTail {
+  100% {
+    background: conic-gradient(
+      at 50% 50%,
+      transparent 123deg,
+      rgb(245, 243, 243) 124deg,
+      rgb(245, 243, 243) 181deg,
+      rgb(236, 234, 234) 182deg,
+      rgb(236, 234, 234) 237deg,
+      transparent 238deg
+    );
+  }
+}
+@keyframes planeColor {
+  30%,
+  100% {
+    background: conic-gradient(
+      at 50% 50%,
+      transparent 123deg,
+      rgb(245, 243, 243) 124deg,
+      rgb(245, 243, 243) 181deg,
+      rgb(236, 234, 234) 182deg,
+      rgb(236, 234, 234) 237deg,
+      transparent 238deg
+    );
+  }
+}
+
+@keyframes Tail {
+  0% {
+    top: 70%;
+  }
+  100% {
+    top: 100%;
+  }
+}
+@keyframes colorRight {
+  100% {
+    border-bottom: calc((var(--height)) * 1rem) solid rgb(245, 243, 243);
+  }
+}
+
+@keyframes colorLeft {
+  100% {
+    border-bottom: calc((var(--height)) * 1rem) solid rgb(236, 234, 234);
+  }
+}
+
+@keyframes rotatePlane1 {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(10deg);
+  }
+}
