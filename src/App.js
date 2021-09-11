@@ -1,6 +1,5 @@
-import logo from "./logo.svg";
 import "./App.css";
-import { Calculator, PlaneButton } from "../src/components";
+import { PlaneButton } from "../src/components/PlaneButton/PlaneButton";
 import edit from "./image/edit.svg";
 
 function App() {

@@ -24,24 +24,21 @@ body {
   align-items: center;
   height: 100vh;
 }
+
 .container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-sizing: border-box;
-  position: relative;
-  padding: 0.5rem;
   width: calc(var(--width) * 1rem);
   height: calc((var(--height)) * 1rem);
   border-radius: calc(var(--border-radius) * 1px);
+  background-color: transparent;
+  position: relative;
   border: none;
-  /* transform: scale(0.8); */
-  /* overflow: var(--overflow); */
-  transition: all 0.3s;
-  background-color: transparent !important;
-  animation: planeScale 3s alternate 2s forwards,
-    planeRotate 3s alternate 2.7s forwards;
+  outline: none;
+  background-color: white;
+  box-sizing: border-box;
+  /* animation: justScale 1.5s alternate forwards, */
+}
+.container.active {
+  background-color: transparent;
 }
 .container.-size-small {
   width: calc(var(--width) * 1rem);
@@ -54,7 +51,26 @@ body {
   --width: 7;
   width: calc((var(--width)) * 1rem);
 }
-.container.after {
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  padding: 0.5rem;
+  width: calc(var(--width) * 1rem);
+  height: calc((var(--height)) * 1rem);
+  border: none;
+  /* overflow: var(--overflow); */
+  transition: all 0.3s ease-in;
+  background-color: transparent !important;
+}
+.button.active {
+  /* animation: justScale 1.5s alternate forwards,
+    planeRotate 1s alternate 2.7s forwards, shoot 1s alternate 5.8s forwards,
+    opacity 1s alternate 5.8s forwards; */
+}
+.button.after {
   flex-direction: row-reverse;
 }
 .space {
@@ -69,117 +85,114 @@ body {
   transition: all 0.3s;
   z-index: 100;
 }
-.left {
+.button.active .left {
   left: 0;
   top: 0;
   border-top: calc((var(--height)) * 1rem) solid red;
   border-right: calc((var(--width) / 2) * 1rem) solid transparent;
-  transform: rotateZ(0);
   animation: Left 1.5s alternate forwards;
 }
-.right {
+.button.active .right {
   right: 0;
   top: 0;
   border-top: calc((var(--height)) * 1rem) solid red;
   border-left: calc((var(--width) / 2) * 1rem) solid transparent;
-  transform: rotateZ(0);
   animation: Right 1.5s alternate forwards;
 }
-.middle {
+.button.active .middle {
   position: absolute;
+  width: 0rem;
+  height: 0rem;
+  border-left: calc((var(--width) / 2) * 1rem) solid transparent;
+  border-right: calc((var(--width) / 2) * 1rem) solid transparent;
+  border-bottom: calc((var(--height)) * 1rem) solid yellow;
+  transition: all 0.3s ease-in;
+
+  /* animation: justScale 1.5s alternate forwards; */
+}
+.button.active .middle::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   width: 2rem;
   height: 3.3rem;
-  /* border-left: calc((var(--width) / 2) * 1rem) solid transparent;
-  border-right: calc((var(--width) / 2) * 1rem) solid transparent;
-  border-bottom: calc((var(--height)) * 1rem) solid white; */
-  background: conic-gradient(
-    at 50% 50%,
-    transparent 123deg,
-    white 124deg,
-    white 181deg,
-    white 182deg,
-    white 237deg,
-    transparent 238deg
-  );
-  animation: planeColor 1.5s alternate forwards;
-}
-/* .middle::after,
-.moddle::before {
-}
-.middle::before {
-  content: "";
-  position: absolute;
-  left: -1rem;
-  border-top: 0px solid transparent;
- border-bottom: calc((var(--height)) * 1rem) solid rgb(245, 243, 243);
-
-  border-bottom: calc((var(--height)) * 1rem) solid white;
-  animation: colorRight 2s alternate 1s forwards;
-
-  border-left: 1rem solid transparent;
   z-index: 100;
+  transition: all 0.3s ease-in;
+  animation: planeColor 1s alternate 2.7s forwards;
 }
-.middle::after {
-  content: "";
-  position: absolute;
-  right: -1rem;
-  border-top: 0px solid transparent;
-  border-bottom: calc((var(--height)) * 1rem) solid rgb(236, 234, 234);
-  border-bottom: calc((var(--height)) * 1rem) solid white;
-
-  border-right: 1rem solid transparent;
-  z-index: 100;
-  animation: colorLeft 2s alternate 1s forwards;
-} */
-.tail {
+.button.active .tail {
   width: 2rem;
   height: 1.3rem;
   position: absolute;
+  top: 100%;
   left: 2.5rem;
-  background: conic-gradient(
-    at 50% 50%,
-    transparent 123deg,
-    white 124deg,
-    white 181deg,
-    white 182deg,
-    white 237deg,
-    transparent 238deg
-  );
   transform: rotate(180deg);
-  z-index: 1000;
-  /* opacity: 0; */
-  animation: Tail 1s alternate 2s forwards, colorTail 1s alternate 2s forwards;
+  transition: all 0.3s ease-in;
+  animation: tail 1s alternate 2s forwards, colorTail 1s alternate 2.7s forwards;
 }
 @keyframes planeScale {
+  100% {
+    transform: scaleX(0.8);
+  }
+}
+@keyframes planeRotate {
+  0% {
+    transform: scale(0.8) rotate(0deg);
+  }
+  /* 25% {
+    transform: scale(0.8) rotate(10deg);
+  }
+  50% {
+    transform: scale(0.8) rotate(20deg);
+  }
+  75% {
+    transform: scale(0.8) rotate(30deg);
+  } */
+  100% {
+    transform: scale(0.8) rotate(40deg);
+  }
+}
+@keyframes justScale {
   100% {
     transform: scale(0.8);
   }
 }
-@keyframes planeRotate {
-  100% {
-    transform: scale(0.8) rotate(50deg);
-  }
-}
 @keyframes Left {
-  from {
+  0% {
     transform: rotateZ(0deg);
   }
-
-  to {
+  50% {
+    transform: rotateZ(180deg);
+  }
+  100% {
     transform: rotateZ(180deg);
   }
 }
 @keyframes Right {
-  from {
+  0% {
     transform: rotateZ(0deg);
   }
-
-  to {
+  50% {
+    transform: rotateZ(-180deg);
+  }
+  100% {
     transform: rotateZ(-180deg);
   }
 }
 @keyframes colorTail {
-  100% {
+  0% {
+    background: conic-gradient(
+      at 50% 50%,
+      transparent 123deg,
+      white 124deg,
+      white 181deg,
+      white 182deg,
+      white 233deg,
+      transparent 235deg
+    );
+  }
+  25% {
     background: conic-gradient(
       at 50% 50%,
       transparent 123deg,
@@ -188,25 +201,98 @@ body {
       rgb(236, 234, 234) 182deg,
       rgb(236, 234, 234) 237deg,
       transparent 238deg
+    );
+  }
+  50% {
+    background: conic-gradient(
+      at 40% 50%,
+      transparent 118deg,
+      var(--primary-dark) 119deg,
+      var(--primary-dark) 179deg,
+      var(--primary-darkest) 180deg,
+      var(--primary-darkest) 229deg,
+      transparent 231deg
+    );
+  }
+  75% {
+    background: conic-gradient(
+      at 40% 50%,
+      transparent 118deg,
+      var(--primary-dark) 119deg,
+      var(--primary-dark) 179deg,
+      transparent 180deg
+    );
+  }
+  100% {
+    background: conic-gradient(
+      at 35% 50%,
+      transparent 117deg,
+      var(--primary-dark) 118deg,
+      var(--primary-dark) 139deg,
+      var(--primary-darkest) 140deg,
+      var(--primary-darkest) 180deg,
+      transparent 177deg
     );
   }
 }
 @keyframes planeColor {
-  30%,
-  100% {
+  0% {
     background: conic-gradient(
       at 50% 50%,
       transparent 123deg,
-      rgb(245, 243, 243) 124deg,
-      rgb(245, 243, 243) 181deg,
-      rgb(236, 234, 234) 182deg,
-      rgb(236, 234, 234) 237deg,
+      white 124deg,
+      white 181deg,
+      white 182deg,
+      white 237deg,
       transparent 238deg
     );
   }
+  25% {
+    background: conic-gradient(
+      at 50% 0%,
+      transparent 164deg,
+      rgb(236, 234, 234) 165deg,
+      rgb(236, 234, 234) 179deg,
+      rgb(245, 243, 243) 180deg,
+      rgb(245, 243, 243) 196deg,
+      transparent 197deg
+    );
+  }
+  50% {
+    background: conic-gradient(
+      at 50% 0%,
+      transparent 163deg,
+      var(--primary-darkest) 164deg,
+      var(--primary-darkest) 176deg,
+      var(--primary-dark) 177deg,
+      var(--primary-dark) 196deg,
+      transparent 197deg
+    );
+  }
+  75% {
+    background: conic-gradient(
+      at 50% 0%,
+      transparent 163deg,
+      white 164deg,
+      white 176deg,
+      var(--primary-dark) 177deg,
+      var(--primary-dark) 196deg,
+      transparent 197deg
+    );
+  }
+  100% {
+    background: conic-gradient(
+      at 50% 0%,
+      transparent 168deg,
+      transparent 168deg,
+      transparent 184deg,
+      var(--primary-dark) 185deg,
+      var(--primary-dark) 196deg,
+      transparent 197deg
+    );
+  }
 }
-
-@keyframes Tail {
+@keyframes tail {
   0% {
     top: 70%;
   }
@@ -219,18 +305,57 @@ body {
     border-bottom: calc((var(--height)) * 1rem) solid rgb(245, 243, 243);
   }
 }
-
 @keyframes colorLeft {
   100% {
     border-bottom: calc((var(--height)) * 1rem) solid rgb(236, 234, 234);
   }
 }
-
-@keyframes rotatePlane1 {
-  0% {
-    transform: rotate(0);
+@keyframes shoot {
+  80%,
+  100% {
+    transform: rotate(40deg) scale(0.8) translate(0, -300px);
+  }
+}
+@keyframes opacity {
+  80% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  95% {
+    opacity: 0.4;
   }
   100% {
-    transform: rotate(10deg);
+    opacity: 0.2;
   }
+}
+.squre {
+  width: 0;
+  height: 0;
+  border-top: 37px solid transparent;
+  border-bottom: 37px solid transparent;
+  border-left: 37px solid green;
+  transform: rotate(225deg);
+  position: absolute;
+  top: -24px;
+  left: -5.6px;
+
+  /*1*/
+  /* border-left: 31px solid green;
+  top: -23px;
+  left: 0.4px; */
+
+  /*2*/
+  /* border-left: 22px solid green;
+  top: -17px;
+  left: 8.4px; */
+
+  /*3*/
+  /* border-left: 11px solid green;
+  top: -14px;
+  left: 20.4px; */
 }

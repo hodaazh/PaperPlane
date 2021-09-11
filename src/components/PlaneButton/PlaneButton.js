@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import React from "react";
 import cn from "classnames";
 import PropTypes from "prop-types";
-import { gsap, TweenMax } from "gsap";
 
 import s from "./PlaneButton.module.css";
 
@@ -30,7 +29,8 @@ const PlaneButton = ({
     height: `${iconHeight}`,
     fontWeight: `${iconStroke}`,
   });
-  const [width, setWidth] = useState(size);
+  const [startAnimate, setStartAnimate] = useState(false);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     setStyle({ ...style, color: color });
@@ -43,32 +43,48 @@ const PlaneButton = ({
     });
   }, [color, bgColor, iconColor, iconWidth, iconHeight, iconStroke]);
 
-  const handleClick = () => {};
+  const handleClick = () => {
+    console.log("hhhh");
+    setStartAnimate(true);
+    console.log(startAnimate);
+    const { offsetTop } = inputRef.current;
+    console.log("offsetTop", inputRef.current);
+  };
+  console.log(startAnimate);
 
   return (
-    <button
+    <div
       className={cn(s.container, {
         [s[btnSize]]: btnSize,
         [s[iconPosition]]: iconPosition,
+        [s.active]: startAnimate,
       })}
-      style={style}
-      onClick={(e) => handleClick}
     >
-      {typeof icon == "string" && !icon.includes(".") ? (
-        <i className={`${icon}`} style={iconStyle} />
-      ) : (
-        <img src={icon} style={iconStyle} />
-      )}
-      {icon && title ? <span className={s.space}></span> : null}
-      {title && <span>{title}</span>}
-      <div className={s.left} style={{ borderTopColor: `${bgColor}` }}></div>
-      <div className={s.right} style={{ borderTopColor: `${bgColor}` }}></div>
-      <div
-        className={s.middle}
-        style={{ borderBottomColor: `${bgColor}` }}
-      ></div>
-      <div className={s.tail}></div>
-    </button>
+      <div className={s.squre}></div>
+      <button
+        className={cn(s.button, {
+          [s.active]: startAnimate,
+        })}
+        style={style}
+        ref={inputRef}
+        onClick={handleClick}
+      >
+        {typeof icon == "string" && !icon.includes(".") ? (
+          <i className={`${icon}`} style={iconStyle} />
+        ) : (
+          <img src={icon} style={iconStyle} />
+        )}
+        {icon && title ? <span className={s.space}></span> : null}
+        {title && <span>{title}</span>}
+        <div className={s.left} style={{ borderTopColor: `${bgColor}` }}></div>
+        <div className={s.right} style={{ borderTopColor: `${bgColor}` }}></div>
+        <div
+          className={s.middle}
+          style={{ borderBottomColor: `${bgColor}` }}
+        ></div>
+        <div className={s.tail}></div>
+      </button>
+    </div>
   );
 };
 PlaneButton.propTypes = {
