@@ -60,7 +60,6 @@ const PlaneButton = ({
         [s.active]: startAnimate,
       })}
     >
-      <div className={s.squre}></div>
       <button
         className={cn(s.button, {
           [s.active]: startAnimate,
@@ -76,8 +75,8 @@ const PlaneButton = ({
         )}
         {icon && title ? <span className={s.space}></span> : null}
         {title && <span>{title}</span>}
-        <div className={s.left} style={{ borderTopColor: `${bgColor}` }}></div>
-        <div className={s.right} style={{ borderTopColor: `${bgColor}` }}></div>
+        <div className={s.left}></div>
+        <div className={s.right}></div>
         <div
           className={s.middle}
           style={{ borderBottomColor: `${bgColor}` }}

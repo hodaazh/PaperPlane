@@ -66,9 +66,8 @@ body {
   background-color: transparent !important;
 }
 .button.active {
-  /* animation: justScale 1.5s alternate forwards,
-    planeRotate 1s alternate 2.7s forwards, shoot 1s alternate 5.8s forwards,
-    opacity 1s alternate 5.8s forwards; */
+  animation: planeRotate 1s alternate 4s forwards,
+    shoot 1s alternate 5.8s forwards, opacity 1s alternate 5.8s forwards;
 }
 .button.after {
   flex-direction: row-reverse;
@@ -79,36 +78,45 @@ body {
 .iconClassName {
   font-family: "icomoon";
 }
-.left,
-.right {
-  position: absolute;
-  transition: all 0.3s;
-  z-index: 100;
-}
 .button.active .left {
-  left: 0;
-  top: 0;
-  border-top: calc((var(--height)) * 1rem) solid red;
-  border-right: calc((var(--width) / 2) * 1rem) solid transparent;
-  animation: Left 1.5s alternate forwards;
+  width: 0;
+  height: 0;
+  position: absolute;
+  border-top: 39px solid transparent;
+  border-bottom: 39px solid transparent;
+  border-left: 39px solid white;
+  top: -26px;
+  left: -4.6px;
+  opacity: 1;
+  transform: rotate(227deg);
+  animation: leftAnim 3s alternate forwards;
 }
 .button.active .right {
-  right: 0;
-  top: 0;
-  border-top: calc((var(--height)) * 1rem) solid red;
-  border-left: calc((var(--width) / 2) * 1rem) solid transparent;
-  animation: Right 1.5s alternate forwards;
+  width: 0;
+  height: 0;
+  position: absolute;
+  border-top: 39px solid transparent;
+  border-bottom: 39px solid transparent;
+  border-left: 39px solid white;
+  top: -26px;
+  right: -4.6px;
+  transform: rotate(313deg);
+  opacity: 1;
+  animation: rightAnim 3s alternate forwards;
 }
 .button.active .middle {
   position: absolute;
   width: 0rem;
   height: 0rem;
-  border-left: calc((var(--width) / 2) * 1rem) solid transparent;
+  /* border-left: calc((var(--width) / 2) * 1rem) solid transparent;
   border-right: calc((var(--width) / 2) * 1rem) solid transparent;
-  border-bottom: calc((var(--height)) * 1rem) solid yellow;
-  transition: all 0.3s ease-in;
+  border-bottom: calc((var(--height)) * 1rem) solid yellow; */
+  border-left: 3.5rem solid transparent;
+  border-right: 3.5rem solid transparent;
+  border-bottom: 3.3rem solid yellow;
+  /* transition: all 0.3s ease-in; */
 
-  /* animation: justScale 1.5s alternate forwards; */
+  animation: justScale 1s alternate 3s forwards;
 }
 .button.active .middle::after {
   content: "";
@@ -119,7 +127,7 @@ body {
   height: 3.3rem;
   z-index: 100;
   transition: all 0.3s ease-in;
-  animation: planeColor 1s alternate 2.7s forwards;
+  animation: planeColor 1s alternate 3.3s forwards;
 }
 .button.active .tail {
   width: 2rem;
@@ -129,8 +137,9 @@ body {
   left: 2.5rem;
   transform: rotate(180deg);
   transition: all 0.3s ease-in;
-  animation: tail 1s alternate 2s forwards, colorTail 1s alternate 2.7s forwards;
+  animation: tail 1s alternate 3s forwards, colorTail 1s alternate 3.3s forwards;
 }
+
 @keyframes planeScale {
   100% {
     transform: scaleX(0.8);
@@ -140,7 +149,7 @@ body {
   0% {
     transform: scale(0.8) rotate(0deg);
   }
-  /* 25% {
+  25% {
     transform: scale(0.8) rotate(10deg);
   }
   50% {
@@ -148,36 +157,19 @@ body {
   }
   75% {
     transform: scale(0.8) rotate(30deg);
-  } */
+  }
   100% {
     transform: scale(0.8) rotate(40deg);
   }
 }
 @keyframes justScale {
-  100% {
-    transform: scale(0.8);
-  }
-}
-@keyframes Left {
-  0% {
-    transform: rotateZ(0deg);
-  }
   50% {
-    transform: rotateZ(180deg);
+    border-left: 3rem solid transparent;
+    border-right: 3rem solid transparent;
   }
   100% {
-    transform: rotateZ(180deg);
-  }
-}
-@keyframes Right {
-  0% {
-    transform: rotateZ(0deg);
-  }
-  50% {
-    transform: rotateZ(-180deg);
-  }
-  100% {
-    transform: rotateZ(-180deg);
+    border-left: 2.5rem solid transparent;
+    border-right: 2.5rem solid transparent;
   }
 }
 @keyframes colorTail {
@@ -333,29 +325,145 @@ body {
     opacity: 0.2;
   }
 }
-.squre {
-  width: 0;
-  height: 0;
-  border-top: 37px solid transparent;
-  border-bottom: 37px solid transparent;
-  border-left: 37px solid green;
-  transform: rotate(225deg);
-  position: absolute;
-  top: -24px;
-  left: -5.6px;
 
-  /*1*/
-  /* border-left: 31px solid green;
-  top: -23px;
-  left: 0.4px; */
-
-  /*2*/
-  /* border-left: 22px solid green;
-  top: -17px;
-  left: 8.4px; */
-
-  /*3*/
-  /* border-left: 11px solid green;
-  top: -14px;
-  left: 20.4px; */
+@keyframes leftAnim {
+  0% {
+    border-left: 31px solid var(--primary-dark);
+    top: -24px;
+    left: 2.4px;
+    transform: rotate(227deg);
+    opacity: 1;
+  }
+  10% {
+    border-left: 22px solid var(--primary-dark);
+    top: -21px;
+    left: 10px;
+    transform: rotate(227deg);
+    opacity: 1;
+  }
+  20% {
+    border-left: 11px solid var(--primary-dark);
+    top: -16px;
+    left: 19.4px;
+    transform: rotate(227deg);
+    opacity: 1;
+  }
+  30% {
+    border-left: 4px solid var(--primary-dark);
+    top: -13.5px;
+    left: 25.4px;
+    transform: rotate(227deg);
+  }
+  40% {
+    transform: rotate(47deg);
+    opacity: 0;
+  }
+  50% {
+    border-left: 4px solid var(--primary-dark) een;
+    top: -11.5px;
+    left: 27.4px;
+    transform: rotate(47deg);
+    z-index: 1;
+  }
+  60% {
+    border-left: 11px solid var(--primary-dark);
+    top: -8.5px;
+    left: 26px;
+    transform: rotate(47deg);
+    z-index: 1;
+  }
+  70% {
+    border-left: 22px solid var(--primary-dark);
+    top: -4.5px;
+    left: 24px;
+    transform: rotate(47deg);
+    z-index: 1;
+  }
+  80% {
+    border-left: 31px solid var(--primary-dark);
+    top: -1.5px;
+    left: 23px;
+    transform: rotate(47deg);
+    z-index: 1;
+  }
+  100% {
+    border-left: 38px solid transparent;
+    top: 0.5px;
+    left: 22px;
+    transform: rotate(46deg);
+    z-index: 1;
+  }
+}
+@keyframes rightAnim {
+  0% {
+    border-left: 31px solid var(--primary-dark);
+    top: -24px;
+    right: 2.4px;
+    transform: rotate(313deg);
+    opacity: 1;
+  }
+  10% {
+    border-left: 22px solid var(--primary-dark);
+    top: -20.5px;
+    right: 10px;
+    transform: rotate(313deg);
+    opacity: 1;
+  }
+  20% {
+    border-left: 11px solid var(--primary-dark);
+    top: -16.5px;
+    right: 19.4px;
+    transform: rotate(313deg);
+    opacity: 1;
+  }
+  30% {
+    border-left: 4px solid var(--primary-dark);
+    top: -13.5px;
+    right: 25.4px;
+    transform: rotate(313deg);
+  }
+  40% {
+    opacity: 0;
+    transform: rotate(133deg);
+  }
+  50% {
+    border-left: 4px solid var(--primary-dark);
+    top: -11.5px;
+    right: 27.4px;
+    transform: rotate(133deg);
+    opacity: 1;
+    z-index: 1;
+  }
+  60% {
+    border-left: 11px solid var(--primary-dark);
+    top: -8.5px;
+    right: 25.4px;
+    transform: rotate(133deg);
+    z-index: 1;
+    opacity: 1;
+  }
+  70% {
+    border-left: 22px solid var(--primary-dark);
+    top: -4.5px;
+    right: 24px;
+    transform: rotate(133deg);
+    z-index: 1;
+    opacity: 1;
+  }
+  80% {
+    border-left: 31px solid var(--primary-dark);
+    top: -1.5px;
+    right: 23px;
+    transform: rotate(133deg);
+    z-index: 1;
+    opacity: 1;
+  }
+  100% {
+    border-left: 38px solid transparent;
+    top: 0.5px;
+    right: 22px;
+    transform: rotate(134deg);
+    z-index: 1;
+    opacity: 1;
+  }
 }
