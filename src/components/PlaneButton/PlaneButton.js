@@ -19,38 +19,12 @@ const PlaneButton = ({
   iconPosition = "before",
 }) => {
   const btnSize = `-size-${size}`;
-  const [style, setStyle] = useState({
-    backgroundColor: `${bgColor}`,
-    color: `${color}`,
-  });
-  const [iconStyle, setIconStyle] = useState({
-    color: `${iconColor}`,
-    width: `${iconWidth}`,
-    height: `${iconHeight}`,
-    fontWeight: `${iconStroke}`,
-  });
   const [startAnimate, setStartAnimate] = useState(false);
   const inputRef = useRef(null);
 
-  useEffect(() => {
-    setStyle({ ...style, color: color });
-    setIconStyle({
-      ...iconStyle,
-      color: iconColor,
-      width: iconWidth,
-      height: iconHeight,
-      fontWeight: iconStroke,
-    });
-  }, [color, bgColor, iconColor, iconWidth, iconHeight, iconStroke]);
-
   const handleClick = () => {
-    console.log("hhhh");
     setStartAnimate(true);
-    console.log(startAnimate);
-    const { offsetTop } = inputRef.current;
-    console.log("offsetTop", inputRef.current);
   };
-  console.log(startAnimate);
 
   return (
     <div
@@ -64,14 +38,30 @@ const PlaneButton = ({
         className={cn(s.button, {
           [s.active]: startAnimate,
         })}
-        style={style}
+        style={{ backgroundColor: bgColor, color: color }}
         ref={inputRef}
         onClick={handleClick}
       >
         {typeof icon == "string" && !icon.includes(".") ? (
-          <i className={`${icon}`} style={iconStyle} />
+          <i
+            className={`${icon}`}
+            style={{
+              color: iconColor,
+              width: iconWidth,
+              height: iconHeight,
+              fontWeight: iconStroke,
+            }}
+          />
         ) : (
-          <img src={icon} style={iconStyle} />
+          <img
+            src={icon}
+            style={{
+              color: iconColor,
+              width: iconWidth,
+              height: iconHeight,
+              fontWeight: iconStroke,
+            }}
+          />
         )}
         {icon && title ? <span className={s.space}></span> : null}
         {title && <span>{title}</span>}
@@ -79,7 +69,7 @@ const PlaneButton = ({
         <div className={s.right}></div>
         <div
           className={s.middle}
-          style={{ borderBottomColor: `${bgColor}` }}
+          // style={{ borderBottomColor: `${bgColor}` }}
         ></div>
         <div className={s.tail}></div>
       </button>
