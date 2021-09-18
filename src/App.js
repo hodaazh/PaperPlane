@@ -8,7 +8,8 @@ function App() {
       title="send"
       bgColor="white"
       color="green"
-      size="large"
+      width="10rem"
+      height="4.3rem"
       icon={edit}
       iconStroke="bold"
       iconHeight={20}

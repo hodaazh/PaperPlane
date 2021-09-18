@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import React from "react";
 import cn from "classnames";
 import PropTypes from "prop-types";
@@ -11,6 +11,8 @@ const PlaneButton = ({
   bgColor = "white",
   color = "black",
   disable,
+  width,
+  height,
   icon,
   iconColor,
   iconHeight,
@@ -18,7 +20,6 @@ const PlaneButton = ({
   iconStroke,
   iconPosition = "before",
 }) => {
-  const btnSize = `-size-${size}`;
   const [startAnimate, setStartAnimate] = useState(false);
   const inputRef = useRef(null);
 
@@ -29,10 +30,10 @@ const PlaneButton = ({
   return (
     <div
       className={cn(s.container, {
-        [s[btnSize]]: btnSize,
         [s[iconPosition]]: iconPosition,
         [s.active]: startAnimate,
       })}
+      style={{ width: width, height: height }}
     >
       <button
         className={cn(s.button, {
@@ -67,10 +68,7 @@ const PlaneButton = ({
         {title && <span>{title}</span>}
         <div className={s.left}></div>
         <div className={s.right}></div>
-        <div
-          className={s.middle}
-          // style={{ borderBottomColor: `${bgColor}` }}
-        ></div>
+        <div className={s.middle}></div>
         <div className={s.tail}></div>
       </button>
     </div>

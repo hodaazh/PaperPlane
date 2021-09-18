@@ -24,10 +24,7 @@ body {
   align-items: center;
   height: 100vh;
 }
-
 .container {
-  width: calc(var(--width) * 1rem);
-  height: calc((var(--height)) * 1rem);
   border-radius: calc(var(--border-radius) * 1px);
   background-color: transparent;
   position: relative;
@@ -37,18 +34,8 @@ body {
   box-sizing: border-box;
 }
 .container.active {
-  background-color: transparent;
-}
-.container.-size-small {
-  width: calc(var(--width) * 1rem);
-}
-.container.-size-medium {
-  --width: 6; /* --width:var(--width) + 1 =>  ??*/
-  width: calc((var(--width)) * 1rem);
-}
-.container.-size-large {
-  --width: 7;
-  width: calc((var(--width)) * 1rem);
+  animation: sizeBtn 0.3s alternate 0.1s forwards,
+    setTransparent 0.3s alternate 0.1s forwards;
 }
 .button {
   display: flex;
@@ -57,16 +44,15 @@ body {
   cursor: pointer;
   position: absolute;
   padding: 0.5rem;
-  width: calc(var(--width) * 1rem);
-  height: calc((var(--height)) * 1rem);
+  width: 100%;
+  height: 100%;
   border: none;
-  /* overflow: var(--overflow); */
   transition: all 0.3s ease-in;
   background-color: transparent !important;
 }
 .button.active {
   animation: planeRotate 1s alternate 3s forwards,
-    shoot 1s alternate 5.8s forwards, opacity 1s alternate 5.8s forwards;
+    shoot 1s alternate 4s forwards, opacity 1s alternate 4s forwards;
 }
 .button.after {
   flex-direction: row-reverse;
@@ -83,12 +69,12 @@ body {
   position: absolute;
   border-top: 39px solid transparent;
   border-bottom: 39px solid transparent;
-  border-left: 39px solid white;
   top: -26px;
   left: -4.6px;
   opacity: 1;
   transform: rotate(227deg);
-  animation: leftAnim 3s alternate 0s forwards;
+  animation: wingColor 0.5s alternate 0.35s forwards,
+    leftAnim 3s alternate 0.4s forwards;
 }
 .button.active .right {
   width: 0;
@@ -96,12 +82,12 @@ body {
   position: absolute;
   border-top: 39px solid transparent;
   border-bottom: 39px solid transparent;
-  border-left: 39px solid white;
   top: -26px;
   right: -4.6px;
   transform: rotate(313deg);
   opacity: 1;
-  animation: rightAnim 3s alternate 0s forwards;
+  animation: wingColor 0.5s alternate 0.35s forwards,
+    rightAnim 3s alternate 0.4s forwards;
 }
 .button.active .middle {
   position: absolute;
@@ -112,10 +98,9 @@ body {
   border-bottom: calc((var(--height)) * 1rem) solid yellow; */
   border-left: 3.5rem solid transparent;
   border-right: 3.5rem solid transparent;
-  border-bottom: 3.3rem solid yellow;
-  /* transition: all 0.3s ease-in; */
-
-  animation: justScale 1s alternate 3s forwards;
+  border-bottom: 3.3rem solid transparent;
+  animation: middleTransparent 1s alternate 0.35s forwards,
+    justScale 1s alternate 3.2s forwards;
 }
 .button.active .middle::after {
   content: "";
@@ -128,7 +113,6 @@ body {
   transition: all 0.3s ease-in;
   animation: planeColor 1s alternate 3s forwards;
 }
-
 .button.active .tail {
   width: 2rem;
   height: 1.3rem;
@@ -139,22 +123,24 @@ body {
   transform: rotate(180deg);
   animation: colorTail 1s alternate 3s forwards;
 }
-
+.button.active span {
+  display: none;
+}
 @keyframes planeRotate {
   0% {
     transform: rotate(0deg);
   }
   25% {
-    transform: rotate(10deg);
+    transform: rotate(7deg);
   }
   50% {
-    transform: rotate(20deg);
+    transform: rotate(14deg);
   }
   75% {
-    transform: rotate(30deg);
+    transform: rotate(21deg);
   }
   100% {
-    transform: rotate(40deg);
+    transform: rotate(30deg);
   }
 }
 @keyframes justScale {
@@ -163,8 +149,8 @@ body {
     border-right: 3rem solid transparent;
   }
   100% {
-    border-left: 2.5rem solid transparent;
-    border-right: 2.5rem solid transparent;
+    border-left: 2rem solid transparent;
+    border-right: 2rem solid transparent;
   }
 }
 @keyframes colorTail {
@@ -227,10 +213,10 @@ body {
     background: conic-gradient(
       at 50% 50%,
       transparent 123deg,
-      white 124deg,
-      white 181deg,
-      white 182deg,
-      white 237deg,
+      transparent 124deg,
+      transparent 181deg,
+      transparent 182deg,
+      transparent 237deg,
       transparent 238deg
     );
   }
@@ -278,14 +264,6 @@ body {
       transparent 197deg
     );
   }
-}
-@keyframes tail {
-  /* 0% {
-    top: 70%;
-  }
-  100% {
-    top: 100%;
-  } */
 }
 @keyframes colorRight {
   100% {
@@ -460,5 +438,33 @@ body {
     transform: rotate(134deg);
     z-index: 1;
     opacity: 1;
+  }
+}
+@keyframes sizeBtn {
+  100% {
+    width: 7rem;
+    height: 3.3rem;
+    background-color: white;
+  }
+}
+@keyframes setTransparent {
+  0%,
+  80% {
+    background-color: white;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+@keyframes middleTransparent {
+  0%,
+  100% {
+    border-bottom: 3.3rem solid white;
+  }
+}
+@keyframes wingColor {
+  0%,
+  100% {
+    border-left: 39px solid white;
   }
 }
