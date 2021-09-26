@@ -9,13 +9,10 @@
   --text-opacity: 1;
   --success: #eeecff;
   --success-stroke: 14;
-  --success-opacity: 0;
   --border-radius: 7;
   --overflow: hidden;
-  --width: 5;
+  --width: 7;
   --height: 3.3;
-  --rotate: 0;
-  --plane-opacity: 1;
 }
 body {
   background-color: blue;
@@ -25,18 +22,36 @@ body {
   height: 100vh;
 }
 .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: calc(var(--border-radius) * 1px);
   background-color: transparent;
   position: relative;
   border: none;
   outline: none;
-  background-color: white;
   box-sizing: border-box;
 }
 .container.active {
-  animation: sizeBtn 0.3s alternate 0.1s forwards,
-    setTransparent 0.3s alternate 0.1s forwards;
+  animation: resizeBtn 0.2s alternate 0.1s forwards,
+    setTransparent 0.2s alternate 0.1s forwards;
 }
+.container.active .success {
+  animation: animateCheck 0.5s linear 3s forwards;
+}
+.container.active .success svg {
+  animation: animateCheckTitle 0.5s linear 3s forwards,
+    animateCheckIcon 0.5s linear 3.4s forwards;
+}
+.container.active .success span {
+  animation: animateCheckTitle 0.5s linear 3s forwards;
+}
+.space {
+  width: 0.7rem;
+}
+/* .iconClassName {
+  font-family: "icomoon";
+} */
 .button {
   display: flex;
   align-items: center;
@@ -51,17 +66,11 @@ body {
   background-color: transparent !important;
 }
 .button.active {
-  animation: planeRotate 1s alternate 3s forwards,
-    shoot 1s alternate 4s forwards, opacity 1s alternate 4s forwards;
+  animation: planeRotate 0.5s alternate 1.5s forwards,
+    shoot 0.8s alternate 2s forwards, opacity 0.5s alternate 2s forwards;
 }
 .button.after {
   flex-direction: row-reverse;
-}
-.space {
-  width: 0.7rem;
-}
-.iconClassName {
-  font-family: "icomoon";
 }
 .button.active .left {
   width: 0;
@@ -73,8 +82,8 @@ body {
   left: -4.6px;
   opacity: 1;
   transform: rotate(227deg);
-  animation: wingColor 0.5s alternate 0.35s forwards,
-    leftAnim 3s alternate 0.4s forwards;
+  animation: wingColor 0.5s alternate 0.25s forwards,
+    leftAnim 1s ease 0.4s forwards;
 }
 .button.active .right {
   width: 0;
@@ -86,21 +95,16 @@ body {
   right: -4.6px;
   transform: rotate(313deg);
   opacity: 1;
-  animation: wingColor 0.5s alternate 0.35s forwards,
-    rightAnim 3s alternate 0.4s forwards;
+  animation: wingColor 0.5s alternate 0.25s forwards,
+    rightAnim 1s ease 0.4s forwards;
 }
 .button.active .middle {
   position: absolute;
-  width: 0rem;
-  height: 0rem;
-  /* border-left: calc((var(--width) / 2) * 1rem) solid transparent;
+  border-left: calc((var(--width) / 2) * 1rem) solid transparent;
   border-right: calc((var(--width) / 2) * 1rem) solid transparent;
-  border-bottom: calc((var(--height)) * 1rem) solid yellow; */
-  border-left: 3.5rem solid transparent;
-  border-right: 3.5rem solid transparent;
-  border-bottom: 3.3rem solid transparent;
-  animation: middleTransparent 1s alternate 0.35s forwards,
-    justScale 1s alternate 3.2s forwards;
+  border-bottom: calc((var(--height)) * 1rem) solid transparent;
+  animation: middleColor 0.5s alternate 0.25s forwards,
+    justScale 1.5s alternate 1.2s forwards;
 }
 .button.active .middle::after {
   content: "";
@@ -108,10 +112,10 @@ body {
   left: 50%;
   transform: translateX(-50%);
   width: 2rem;
-  height: 3.3rem;
+  height: calc((var(--height)) * 1rem);
   z-index: 100;
   transition: all 0.3s ease-in;
-  animation: planeColor 1s alternate 3s forwards;
+  animation: planeColor 0.5s ease-out 1.4s forwards;
 }
 .button.active .tail {
   width: 2rem;
@@ -121,11 +125,38 @@ body {
   left: 2.5rem;
   transition: all 0.3s ease-in;
   transform: rotate(180deg);
-  animation: colorTail 1s alternate 3s forwards;
+  animation: colorTail 0.5s ease-out 1.4s forwards;
 }
-.button.active span {
+.button.active span,
+.button.active i,
+.button.active img {
   display: none;
 }
+.success {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 100%;
+  opacity: 1;
+}
+.success span {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-left: 1rem;
+  opacity: 0;
+}
+.success svg {
+  transform: scale(1.5);
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke-width: 2;
+  stroke: var(--success);
+  opacity: 0;
+  stroke-dasharray: var(--success-stroke);
+  stroke-dashoffset: var(--success-stroke);
+}
+
 @keyframes planeRotate {
   0% {
     transform: rotate(0deg);
@@ -144,10 +175,6 @@ body {
   }
 }
 @keyframes justScale {
-  50% {
-    border-left: 3rem solid transparent;
-    border-right: 3rem solid transparent;
-  }
   100% {
     border-left: 2rem solid transparent;
     border-right: 2rem solid transparent;
@@ -210,15 +237,7 @@ body {
 }
 @keyframes planeColor {
   0% {
-    background: conic-gradient(
-      at 50% 50%,
-      transparent 123deg,
-      transparent 124deg,
-      transparent 181deg,
-      transparent 182deg,
-      transparent 237deg,
-      transparent 238deg
-    );
+    background: conic-gradient(at 50% 50%, transparent 238deg);
   }
   25% {
     background: conic-gradient(
@@ -263,16 +282,6 @@ body {
       var(--primary-dark) 196deg,
       transparent 197deg
     );
-  }
-}
-@keyframes colorRight {
-  100% {
-    border-bottom: calc((var(--height)) * 1rem) solid rgb(245, 243, 243);
-  }
-}
-@keyframes colorLeft {
-  100% {
-    border-bottom: calc((var(--height)) * 1rem) solid rgb(236, 234, 234);
   }
 }
 @keyframes shoot {
@@ -440,31 +449,55 @@ body {
     opacity: 1;
   }
 }
-@keyframes sizeBtn {
+@keyframes resizeBtn {
   100% {
     width: 7rem;
     height: 3.3rem;
-    background-color: white;
+    padding: 0.5rem;
   }
 }
 @keyframes setTransparent {
   0%,
   80% {
-    background-color: white;
+    background-color: var(--primary);
   }
   100% {
     background-color: transparent;
   }
 }
-@keyframes middleTransparent {
+@keyframes middleColor {
   0%,
   100% {
-    border-bottom: 3.3rem solid white;
+    border-bottom: 3.3rem solid var(--primary);
   }
 }
 @keyframes wingColor {
   0%,
   100% {
-    border-left: 39px solid white;
+    border-left: 39px solid var(--primary);
+  }
+}
+@keyframes animateCheck {
+  100% {
+    right: 50%;
+    transform: translateX(50%);
+  }
+}
+@keyframes animateCheckIcon {
+  0% {
+    stroke-dashoffset: var(--success-stroke);
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+@keyframes animateCheckTitle {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

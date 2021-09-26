@@ -6,13 +6,16 @@ function App() {
   return (
     <PlaneButton
       title="send"
+      sentTitle="sent"
       bgColor="white"
-      color="green"
-      width="10rem"
-      height="4.3rem"
+      color="#eeecff"
+      width="17rem"
+      height="3.3rem"
       icon={edit}
       iconStroke="bold"
       iconHeight={20}
+      padding="0.5rem"
+      checkColor="#eeecff"
     />
   );
 }
